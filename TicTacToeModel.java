@@ -1,3 +1,4 @@
+import java.awt.image.WritableRenderedImage;
 import java.util.*;
 
 /**
@@ -5,10 +6,10 @@ import java.util.*;
  *
  * @author Lynn Marshall
  * @author Hubert Dang
- * @version March 24, 2023
+ * @version March 29, 2023
  */
 
-public class TicTacToe {
+public class TicTacToeModel {
     public static final String PLAYER_X = "X"; // player using "X"
     public static final String PLAYER_O = "O"; // player using "O"
     public static final String EMPTY = " ";  // empty cell
@@ -25,7 +26,7 @@ public class TicTacToe {
     /**
      * Constructs a new Tic-Tac-Toe board.
      */
-    public TicTacToe() {
+    public TicTacToeModel() {
         board = new String[3][3];
     }
 
@@ -46,50 +47,42 @@ public class TicTacToe {
 
 
     /**
-     * Plays one game of Tic Tac Toe.
+     * Fills a square in the 3x3 board with either an X or an O.
+     *
+     * @param row The row of the square.
+     * @param col The column of the square.
      */
-
-    public void playGame() {
-        int row, col;
-        Scanner sc;
-
-        clearBoard(); // clear the board
-
-        // print starting board
-        print();
-
-        // loop until the game ends
-        while (winner == EMPTY) { // game still in progress
-
-            // get input (row and column)
-            while (true) { // repeat until valid input
-                System.out.print("Enter row and column of chosen square (0, 1, 2 for each): ");
-                sc = new Scanner(System.in);
-                row = sc.nextInt();
-                col = sc.nextInt();
-                if (row >= 0 && row <= 2 && col >= 0 && col <= 2 && board[row][col] == EMPTY) break;
-                System.out.println("Invalid selection, try again.");
-            }
-
-            board[row][col] = player;        // fill in the square with player
-            numFreeSquares--;            // decrement number of free squares
-
-            // see if the game is over
-            if (haveWinner(row, col))
-                winner = player; // must be the player who just went
-            else if (numFreeSquares == 0)
-                winner = TIE; // board is full so it's a tie
-
-            // print current board
-            print();
-
-            // change to other player (this won't do anything if game has ended)
-            if (player == PLAYER_X)
-                player = PLAYER_O;
-            else
-                player = PLAYER_X;
+    public void setSquare(int row, int col) {
+        // only fill square if it is a valid and empty square
+        if (row >= 0 && row <= 2 && col >= 0 && col <= 2 && board[row][col] == EMPTY) {
+            board[row][col] = player;
+            numFreeSquares--;
         }
+        // see if the game is over
+        if (haveWinner(row, col)) {
+            winner = player; // must be the player who just went
+        } else if (numFreeSquares == 0) {
+            winner = TIE; // board is full so it's a tie
+        }
+        // change to other player (this won't do anything if game has ended)
+        if (player == PLAYER_X) {
+            player = PLAYER_O;
+        } else {
+            player = PLAYER_X;
+        }
+    }
 
+
+    /**
+     * Returns the value of the square at a specified row and column.
+     *
+     * @param row The row of the square.
+     * @param col The column of the square.
+     *
+     * @return The value of the specified square.
+     */
+    public String getSquare(int row, int col) {
+        return board[row][col];
     }
 
 
@@ -136,38 +129,32 @@ public class TicTacToe {
 
 
     /**
-     * Prints the board to standard out using toString().
+     * Returns false if there is no winner, true otherwise.
+     *
+     * @return false if there is no winner, true otherwise.
      */
-    public void print() {
-        System.out.println(toString());
+    public boolean haveWinner() {
+        if (winner == EMPTY) {
+            return false;
+        }
+        return true;
     }
 
 
     /**
-     * Returns a string representing the current state of the game.  This should look like
-     * a regular tic tac toe board, and be followed by a message if the game is over that says
-     * who won (or indicates a tie).
+     * Return the game's state as a String.
      *
-     * @return String representing the tic tac toe game state
+     * @return A String of the game's current state.
      */
-    public String toString() {
-        String gameState = "";
-        for (int i = 0; i < 3; i++) {
-            gameState += board[i][0] + " | " + board[i][1] + " | " + board[i][2] + "\n";
-            if (i != 2) {
-                gameState += "---------\n";
-            }
-        }
-
+    public String getGameState() {
+        String gameState;
         if (winner == EMPTY) {
-            gameState += "\n";
-            return gameState;
+            gameState = "Game in progress: " + player + "'s turn";
+        } else if (winner == TIE) {
+            gameState = "Tie";
+        } else {
+            gameState = player + " wins";
         }
-        if (winner == TIE) {
-            gameState += "\nTie\n";
-            return gameState;
-        }
-        gameState += "\n" + player + " wins\n";
         return gameState;
     }
 }
