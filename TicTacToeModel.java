@@ -1,15 +1,16 @@
 import java.awt.image.WritableRenderedImage;
 import java.util.*;
+import java.util.Observable;
 
 /**
  * A class modelling a tic-tac-toe (noughts and crosses, Xs and Os) game.
  *
  * @author Lynn Marshall
  * @author Hubert Dang
- * @version March 29, 2023
+ * @version March 30, 2023
  */
 
-public class TicTacToeModel {
+public class TicTacToeModel extends Observable {
     public static final String PLAYER_X = "X"; // player using "X"
     public static final String PLAYER_O = "O"; // player using "O"
     public static final String EMPTY = " ";  // empty cell
@@ -28,6 +29,7 @@ public class TicTacToeModel {
      */
     public TicTacToeModel() {
         board = new String[3][3];
+        clearBoard();
     }
 
     /**
@@ -70,6 +72,8 @@ public class TicTacToeModel {
         } else {
             player = PLAYER_X;
         }
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -78,7 +82,6 @@ public class TicTacToeModel {
      *
      * @param row The row of the square.
      * @param col The column of the square.
-     *
      * @return The value of the specified square.
      */
     public String getSquare(int row, int col) {
