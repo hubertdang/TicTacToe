@@ -54,11 +54,12 @@ public class TicTacToeView extends JPanel implements Observer {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // set button icons according to their mark
-                if (board[i][j] == "X") {
+                if (board[i][j] == model.PLAYER_X) {
                     controller.getButton(i, j).setIcon(xIcon);
-                }
-                if (board[i][j] == "O") {
+                } else if (board[i][j] == model.PLAYER_O) {
                     controller.getButton(i, j).setIcon(oIcon);
+                } else {
+                    controller.getButton(i, j).setIcon(null);
                 }
             }
         }
