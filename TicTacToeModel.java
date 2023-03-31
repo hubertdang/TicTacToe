@@ -53,6 +53,16 @@ public class TicTacToeModel extends Observable {
 
 
     /**
+     * Resets the game to its initial state.
+     */
+    public void newGame() {
+        this.clearBoard();
+        setChanged();
+        notifyObservers();
+    }
+
+
+    /**
      * Fills a square in the 3x3 board with either an X or an O.
      *
      * @param row The row of the square.
