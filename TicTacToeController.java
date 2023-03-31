@@ -12,19 +12,20 @@ import java.util.Observer;
  * @version March 30, 2023
  */
 
-public class TicTacToeController extends JFrame implements ActionListener, Observer {
+public class TicTacToeController extends JFrame implements ActionListener {
     private JButton buttonBoard[][]; // 3x3 array of buttons on the board
     private TicTacToeModel model;
 
     public TicTacToeController(TicTacToeView view, TicTacToeModel model) {
         super("TicTacToe");
 
-        this.setPreferredSize(new Dimension(800, 700));
+        this.setPreferredSize(new Dimension(800, 800));
         this.model = model;
         buttonBoard = new JButton[3][3];
         populateFrame(view);
         registerListener();
     }
+
 
     /**
      * Populate the frame with the view.
@@ -48,6 +49,7 @@ public class TicTacToeController extends JFrame implements ActionListener, Obser
         // place buttons on top of the game state
         contentPane.add(buttonPanel, BorderLayout.CENTER);
     }
+
 
     /**
      * Register this frame as the listener for the buttons.
@@ -89,14 +91,13 @@ public class TicTacToeController extends JFrame implements ActionListener, Obser
 
 
     /**
-     * See the documentation for java.util.Observer.
+     * Returns a button in the buttonBoard.
+     *
+     * @param row The row of the button.
+     * @param col The column of the button.
+     * @return The button at the specified row and column in the buttonBoard.
      */
-    public void update(Observable o, Object arg) {
-        String[][] board = model.getBoard();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttonBoard[i][j].setText(board[i][j]);
-            }
-        }
+    public JButton getButton(int row, int col) {
+        return buttonBoard[row][col];
     }
 }
