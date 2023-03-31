@@ -13,17 +13,18 @@ public class TicTacToe {
         TicTacToeView view = new TicTacToeView();
         TicTacToeController controller = new TicTacToeController(view, model);
 
-        // register the view and the controller (because of the button icons) as an observer of the model
+        // enable the view to access the game's controllers in order to access button icons
+        view.setController(controller);
+
+        // register the view as an observer of the model
         model.addObserver(view);
-        model.addObserver(controller);
 
         controller.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         controller.pack();
-        controller.setResizable(true);
+        controller.setResizable(false);
         controller.setVisible(true);
 
-        // Update controller buttons and the view to reflect the initial state of the model
-        controller.update(model, null);
+        // Update the view to reflect the initial state of the model
         view.update(model, null);
     }
 }
