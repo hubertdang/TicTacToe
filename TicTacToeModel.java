@@ -4,6 +4,10 @@ import java.util.Observable;
 
 /**
  * A class modelling a tic-tac-toe (noughts and crosses, Xs and Os) game.
+ * <p>
+ * Note: The 3x3 array of Strings was kept because the game's buttons are in
+ * the controller class, and the logic for marking squares is in this (model)
+ * class.
  *
  * @author Lynn Marshall
  * @author Hubert Dang
@@ -78,16 +82,13 @@ public class TicTacToeModel extends Observable {
 
 
     /**
-     * Returns the value of the square at a specified row and column.
+     * Returns the board.
      *
-     * @param row The row of the square.
-     * @param col The column of the square.
-     * @return The value of the specified square.
+     * @return The board.
      */
-    public String getSquare(int row, int col) {
-        return board[row][col];
+    public String[][] getBoard() {
+        return board;
     }
-
 
     /**
      * Returns true if filling the given square gives us a winner, and false
@@ -133,6 +134,9 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Returns false if there is no winner, true otherwise.
+     * <p>
+     * Note: This method was created to allow the controller class to identify
+     * when to disable all buttons (when there is a winner).
      *
      * @return false if there is no winner, true otherwise.
      */
@@ -146,6 +150,8 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Return the game's state as a String.
+     * <p>
+     * Note: This method takes logic from the toString method in lab 10.
      *
      * @return A String of the game's current state.
      */
@@ -156,7 +162,7 @@ public class TicTacToeModel extends Observable {
         } else if (winner == TIE) {
             gameState = "Tie";
         } else {
-            gameState = player + " wins";
+            gameState = winner + " wins";
         }
         return gameState;
     }
