@@ -14,24 +14,44 @@ import java.util.Observable;
 public class TicTacToeView extends JPanel implements Observer {
 
     private JTextField gameStateDisplay;
+    private JPanel gameScore;
+    private JTextField numWinsXDisplay;
+    private JTextField numWinsODisplay;
     private JMenuItem quitItem;
     private static ImageIcon oIcon = new ImageIcon("oicon.jpg");
     private static ImageIcon xIcon = new ImageIcon("xicon.jpg");
     private TicTacToeController controller;
 
     public TicTacToeView() {
+        this.setLayout(new BorderLayout());
+
+        // displaying the game state
         gameStateDisplay = new JTextField();
         gameStateDisplay.setEditable(false);
-        gameStateDisplay.setFont(new Font(null, Font.PLAIN, 18));
+        gameStateDisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
         gameStateDisplay.setHorizontalAlignment(JTextField.LEFT);
-        this.setLayout(new GridLayout(1, 1));
-        this.add(gameStateDisplay);
+        this.add(gameStateDisplay, BorderLayout.WEST);
+
+        // create text fields to show number of wins for player X and player O
+        numWinsXDisplay = new JTextField();
+        numWinsODisplay = new JTextField();
+        numWinsXDisplay.setEditable(false);
+        numWinsODisplay.setEditable(false);
+        numWinsXDisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
+        numWinsODisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
+
+        // create panel for the score and add the text fields for number of wins
+        gameScore = new JPanel();
+        gameScore.setLayout(new GridLayout(1, 2));
+        gameScore.add(numWinsODisplay);
+        gameScore.add(numWinsXDisplay);
+        this.add(gameScore, BorderLayout.SOUTH);
     }
 
 
     /**
      * Set the controller to controller.
-     *
+     * <p>
      * Note: This method was created to be able to access the game's
      * controller from within the view.
      *
@@ -41,14 +61,23 @@ public class TicTacToeView extends JPanel implements Observer {
         this.controller = controller;
     }
 
+
     /**
      * See the documentation for java.util.Observer.
      */
     public void update(Observable o, Object arg) {
         TicTacToeModel model = (TicTacToeModel) o;
+
         // display current game state
         String gameState = model.getGameState();
         gameStateDisplay.setText(gameState);
+
+        // display the score between player X and O
+        int numWinsX = model.getNumWins(model.PLAYER_X);
+        int numWinsO = model.getNumWins(model.PLAYER_O);
+        numWinsXDisplay.setText("X number of wins: " + numWinsX);
+        numWinsODisplay.setText("O number of wins: " + numWinsO);
+
         // display the correct marks on the buttons
         String[][] board = model.getBoard();
         for (int i = 0; i < 3; i++) {
