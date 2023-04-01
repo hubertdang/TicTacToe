@@ -4,14 +4,14 @@ import java.util.Observable;
 
 /**
  * A class modelling a tic-tac-toe (noughts and crosses, Xs and Os) game.
- * <p>
+ *
  * Note: The 3x3 array of Strings was kept because the game's buttons are in
  * the controller class, and the logic for marking squares is in this (model)
  * class.
  *
  * @author Lynn Marshall
  * @author Hubert Dang
- * @version March 30, 2023
+ * @version April 1, 2023
  */
 
 public class TicTacToeModel extends Observable {
@@ -24,6 +24,9 @@ public class TicTacToeModel extends Observable {
 
     private String winner;   // winner: PLAYER_X, PLAYER_O, TIE, EMPTY = in progress
 
+    private int numWinsX;  // number of times player using "X" won
+    private int numWinsO;  // number of times player using "O" won
+
     private int numFreeSquares; // number of squares still free
 
     private String board[][]; // 3x3 array representing the board
@@ -34,6 +37,8 @@ public class TicTacToeModel extends Observable {
     public TicTacToeModel() {
         board = new String[3][3];
         clearBoard();
+        numWinsX = 0;
+        numWinsO = 0;
     }
 
     /**
@@ -54,6 +59,8 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Resets the game to its initial state.
+     *
+     * Note: This method was created because clearBoard could not be used to notify the observer.
      */
     public void newGame() {
         this.clearBoard();
@@ -69,22 +76,24 @@ public class TicTacToeModel extends Observable {
      * @param col The column of the square.
      */
     public void setSquare(int row, int col) {
+        String potentialWinner = player;  // store the player in case they win on this turn
         // only fill square if it is a valid and empty square
         if (row >= 0 && row <= 2 && col >= 0 && col <= 2 && board[row][col] == EMPTY) {
             board[row][col] = player;
             numFreeSquares--;
+            // change to other player
+            if (player == PLAYER_X) {
+                player = PLAYER_O;
+            } else {
+                player = PLAYER_X;
+            }
         }
         // see if the game is over
         if (haveWinner(row, col)) {
-            winner = player; // must be the player who just went
+            winner = potentialWinner; // must be the player who just went
+            incrementNumWins(winner);
         } else if (numFreeSquares == 0) {
             winner = TIE; // board is full so it's a tie
-        }
-        // change to other player (this won't do anything if game has ended)
-        if (player == PLAYER_X) {
-            player = PLAYER_O;
-        } else {
-            player = PLAYER_X;
         }
         setChanged();
         notifyObservers();
@@ -144,7 +153,7 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Returns false if there is no winner, true otherwise.
-     * <p>
+     *
      * Note: This method was created to allow the controller class to identify
      * when to disable all buttons (when there is a winner).
      *
@@ -160,7 +169,7 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Return the game's state as a String.
-     * <p>
+     *
      * Note: This method takes logic from the toString method in lab 10.
      *
      * @return A String of the game's current state.
@@ -175,6 +184,35 @@ public class TicTacToeModel extends Observable {
             gameState = winner + " wins";
         }
         return gameState;
+    }
+
+
+    /**
+     * Returns the number of wins that a player has.
+     *
+     * @param player The player whose number of wins is being returned.
+     * @return The number of times a player has won.
+     */
+    public int getNumWins(String player) {
+        if (player == PLAYER_X) {
+            return numWinsX;
+        } else {
+            return numWinsO;
+        }
+    }
+
+
+    /**
+     * Increments a player's number of wins by 1.
+     *
+     * @param player The player whose number of wins is to be incremented.
+     */
+    private void incrementNumWins(String player) {
+        if (player == PLAYER_X) {
+            numWinsX++;
+        } else {
+            numWinsO++;
+        }
     }
 }
 
