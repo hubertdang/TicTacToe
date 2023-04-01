@@ -12,7 +12,7 @@ import java.util.Observer;
  * @version March 30, 2023
  */
 
-public class TicTacToeController extends JFrame implements ActionListener {
+public class TicTacToeController extends JFrame implements ActionListener, MouseListener {
     private JButton buttonBoard[][]; // 3x3 array of buttons on the board
     private TicTacToeModel model;
     private JMenuItem newItem;
@@ -50,11 +50,14 @@ public class TicTacToeController extends JFrame implements ActionListener {
         }
         // place buttons on top of the game state
         contentPane.add(buttonPanel, BorderLayout.CENTER);
-        // place menu above buttons
+
+        // create a menu and place it above buttons
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar); // add menu bar to the frame
 
-        JMenu fileMenu = new JMenu("Options"); // create a menu
+        JMenu fileMenu = new JMenu("Game"); // create a menu
+        fileMenu.addMouseListener(this);
+        fileMenu.setFont(new Font("sans-serif", Font.PLAIN, 18));
         menuBar.add(fileMenu); // and add to the menu bar
 
         newItem = new JMenuItem("New"); // create a menu item called "New"
@@ -144,4 +147,33 @@ public class TicTacToeController extends JFrame implements ActionListener {
     public JButton getButton(int row, int col) {
         return buttonBoard[row][col];
     }
+
+
+    /**
+     * Detects when the mouse enters the component.  We are only "listening" to the
+     * JMenu.  We highlight the menu name when the mouse goes into that component.
+     *
+     * @param e The mouse event triggered when the mouse was moved into the component
+     */
+    public void mouseEntered(MouseEvent e) {
+        JMenu item = (JMenu) e.getSource();
+        item.setSelected(true); // highlight the menu name
+    }
+
+    /**
+     * Detects when the mouse exits the component.  We are only "listening" to the
+     * JMenu.  We stop highlighting the menu name when the mouse exits  that component.
+     *
+     * @param e The mouse event triggered when the mouse was moved out of the component
+     */
+    public void mouseExited(MouseEvent e) {
+        JMenu item = (JMenu) e.getSource();
+        item.setSelected(false); // stop highlighting the menu name
+    }
+
+
+    // empty implementations of methods in MouseListener interface
+    public void mouseClicked(MouseEvent e){}
+    public void mousePressed(MouseEvent e){}
+    public void mouseReleased(MouseEvent e){}
 }
