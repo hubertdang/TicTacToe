@@ -234,5 +234,19 @@ public class TicTacToeModel extends Observable {
     public String getCurrentPlayer() {
         return player;
     }
+
+
+    /**
+     * Returns the mark at a specified square on the board.
+     * @param row The row of the tile.
+     * @param col The column of the tile.
+     * @return The String mark at the specified square on the board.
+     *
+     * Note: This method was created for the controller to know the mark of a square
+     * in method actionPerformed.
+     */
+    public String getMark(int row, int col) {
+        return board[row][col];
+    }
 }
 
