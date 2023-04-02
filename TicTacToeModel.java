@@ -224,5 +224,15 @@ public class TicTacToeModel extends Observable {
             numWinsO++;
         }
     }
+
+
+    /**
+     * Returns the String of the current player.
+     *
+     * @return A String of the current player
+     */
+    public String getCurrentPlayer() {
+        return player;
+    }
 }
 
