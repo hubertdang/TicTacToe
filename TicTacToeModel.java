@@ -11,7 +11,7 @@ import java.util.Observable;
  *
  * @author Lynn Marshall
  * @author Hubert Dang
- * @version April 1, 2023
+ * @version April 2, 2023
  */
 
 public class TicTacToeModel extends Observable {
@@ -37,8 +37,7 @@ public class TicTacToeModel extends Observable {
     public TicTacToeModel() {
         board = new String[3][3];
         clearBoard();
-        numWinsX = 0;
-        numWinsO = 0;
+        resetScore();
     }
 
     /**
@@ -54,6 +53,17 @@ public class TicTacToeModel extends Observable {
         winner = EMPTY;
         numFreeSquares = 9;
         player = PLAYER_X;     // Player X always has the first turn.
+    }
+
+
+    /**
+     * Resets the number of wins for player X and O.
+     */
+    public void resetScore() {
+        numWinsX = 0;
+        numWinsO = 0;
+        setChanged();
+        notifyObservers();
     }
 
 
