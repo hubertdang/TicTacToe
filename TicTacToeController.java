@@ -1,6 +1,9 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +21,7 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
     private JMenuItem newItem;
     private JMenuItem quitItem;
     private JMenuItem resetItem;  // for resetting the players' scores
+    AudioClip click;
 
     public TicTacToeController(TicTacToeView view, TicTacToeModel model) {
         super("TicTacToe");
@@ -114,6 +118,15 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (button == buttonBoard[i][j]) {
+                        if (model.getCurrentPlayer() == model.PLAYER_X) {
+                            URL urlClick = TicTacToeController.class.getResource("sword.wav");
+                            click = Applet.newAudioClip(urlClick);
+                            click.play(); // just plays clip once
+                        } else if (model.getCurrentPlayer() == model.PLAYER_O) {
+                            URL urlClick = TicTacToeController.class.getResource("shield.wav");
+                            click = Applet.newAudioClip(urlClick);
+                            click.play(); // just plays clip once
+                        }
                         model.setSquare(i, j);
                         break;
                     }
