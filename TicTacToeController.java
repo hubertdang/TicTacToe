@@ -118,11 +118,13 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (button == buttonBoard[i][j]) {
-                        if (model.getCurrentPlayer() == model.PLAYER_X) {
+                        // only make sound if the button wasn't marked
+                        if (model.getCurrentPlayer() == model.PLAYER_X && model.getMark(i,j) == model.EMPTY) {
                             URL urlClick = TicTacToeController.class.getResource("sword.wav");
                             click = Applet.newAudioClip(urlClick);
                             click.play(); // just plays clip once
-                        } else if (model.getCurrentPlayer() == model.PLAYER_O) {
+                            // only make sound if the button wasn't marked
+                        } else if (model.getCurrentPlayer() == model.PLAYER_O && model.getMark(i,j) == model.EMPTY) {
                             URL urlClick = TicTacToeController.class.getResource("shield.wav");
                             click = Applet.newAudioClip(urlClick);
                             click.play(); // just plays clip once
