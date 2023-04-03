@@ -13,10 +13,10 @@ import java.util.Observable;
 
 public class TicTacToeView extends JPanel implements Observer {
 
-    private JTextField gameStateDisplay;
+    private JLabel gameStateDisplay;
     private JPanel gameScore;
-    private JTextField numWinsXDisplay;
-    private JTextField numWinsODisplay;
+    private JLabel numWinsXDisplay;
+    private JLabel numWinsODisplay;
     private JMenuItem quitItem;
     private static ImageIcon oIcon = new ImageIcon("oicon.jpg");
     private static ImageIcon xIcon = new ImageIcon("xicon.jpg");
@@ -26,26 +26,23 @@ public class TicTacToeView extends JPanel implements Observer {
         this.setLayout(new BorderLayout());
 
         // displaying the game state
-        gameStateDisplay = new JTextField();
-        gameStateDisplay.setEditable(false);
-        gameStateDisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
-        gameStateDisplay.setHorizontalAlignment(JTextField.LEFT);
+        gameStateDisplay = new JLabel();
+        gameStateDisplay.setFont(new Font("serif", Font.PLAIN, 24));
         this.add(gameStateDisplay, BorderLayout.WEST);
 
         // create text fields to show number of wins for player X and player O
-        numWinsXDisplay = new JTextField();
-        numWinsODisplay = new JTextField();
-        numWinsXDisplay.setEditable(false);
-        numWinsODisplay.setEditable(false);
-        numWinsXDisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
-        numWinsODisplay.setFont(new Font("sans-serif", Font.PLAIN, 18));
+        numWinsXDisplay = new JLabel();
+        numWinsODisplay = new JLabel();
+        numWinsXDisplay.setFont(new Font("serif", Font.PLAIN, 24));
+        numWinsODisplay.setFont(new Font("serif", Font.PLAIN, 24));
 
         // create panel for the score and add the text fields for number of wins
         gameScore = new JPanel();
-        gameScore.setLayout(new GridLayout(1, 2));
+        gameScore.setLayout(new GridLayout(2, 1));
+
         gameScore.add(numWinsODisplay);
         gameScore.add(numWinsXDisplay);
-        this.add(gameScore, BorderLayout.SOUTH);
+        this.add(gameScore, BorderLayout.EAST);
     }
 
 
@@ -75,8 +72,8 @@ public class TicTacToeView extends JPanel implements Observer {
         // display the score between player X and O
         int numWinsX = model.getNumWins(model.PLAYER_X);
         int numWinsO = model.getNumWins(model.PLAYER_O);
-        numWinsXDisplay.setText("X number of wins: " + numWinsX);
-        numWinsODisplay.setText("O number of wins: " + numWinsO);
+        numWinsXDisplay.setText("X number of wins: " + numWinsX + " ");
+        numWinsODisplay.setText("O number of wins: " + numWinsO + " ");
 
         // display the correct marks on the buttons
         String[][] board = model.getBoard();
