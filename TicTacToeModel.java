@@ -162,18 +162,11 @@ public class TicTacToeModel extends Observable {
 
 
     /**
-     * Returns false if there is no winner, true otherwise.
-     *
-     * Note: This method was created to allow the controller class to identify
-     * when to disable all buttons (when there is a winner).
-     *
-     * @return false if there is no winner, true otherwise.
+     * Returns the winner.
+     * @return A String of the winner.
      */
-    public boolean haveWinner() {
-        if (winner == EMPTY) {
-            return false;
-        }
-        return true;
+    public String getWinner() {
+        return winner;
     }
 
 
