@@ -134,8 +134,14 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
                     }
                 }
             }
-            // Disable all buttons when someone has won the game
-            if (model.haveWinner()) {
+            // Disable all buttons when someone has won the game or tied
+            String winner = model.getWinner();
+            if (winner != model.EMPTY) {
+                if (winner != model.TIE) {  // only play the winning sound if someone won, not including ties
+                    URL urlClick = TicTacToeController.class.getResource("won.wav");
+                    click = Applet.newAudioClip(urlClick);
+                    click.play(); // just plays clip once
+                }
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         buttonBoard[i][j].setEnabled(false);
