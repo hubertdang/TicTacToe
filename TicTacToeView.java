@@ -20,6 +20,7 @@ public class TicTacToeView extends JPanel implements Observer {
     private JMenuItem quitItem;
     private static ImageIcon oIcon = new ImageIcon("oicon.jpg");
     private static ImageIcon xIcon = new ImageIcon("xicon.jpg");
+    private static ImageIcon emptyIcon = new ImageIcon("emptyicon.jpg");
     private TicTacToeController controller;
 
     public TicTacToeView() {
@@ -85,7 +86,7 @@ public class TicTacToeView extends JPanel implements Observer {
                 } else if (board[i][j] == model.PLAYER_O) {
                     controller.getButton(i, j).setIcon(oIcon);
                 } else {
-                    controller.getButton(i, j).setIcon(null);
+                    controller.getButton(i, j).setIcon(emptyIcon);
                 }
             }
         }
