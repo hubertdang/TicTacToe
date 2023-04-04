@@ -21,6 +21,7 @@ public class TicTacToeModel extends Observable {
     public static final String TIE = "T"; // game ended in a tie
 
     private String player;   // current player (PLAYER_X or PLAYER_O)
+    private String startingPlayer;  // the player that will start the game
 
     private String winner;   // winner: PLAYER_X, PLAYER_O, TIE, EMPTY = in progress
 
@@ -36,6 +37,7 @@ public class TicTacToeModel extends Observable {
      */
     public TicTacToeModel() {
         board = new String[3][3];
+        startingPlayer = PLAYER_X;  // player X starts by default
         clearBoard();
         resetScore();
     }
@@ -52,7 +54,19 @@ public class TicTacToeModel extends Observable {
         }
         winner = EMPTY;
         numFreeSquares = 9;
-        player = PLAYER_X;     // Player X always has the first turn.
+        player = startingPlayer;
+    }
+
+
+    /**
+     * Changes the starting player to the other player.
+     */
+    public void changeStartingPlayer() {
+        if (startingPlayer == PLAYER_X) {
+            startingPlayer = PLAYER_O;
+        } else {
+            startingPlayer = PLAYER_X;
+        }
     }
 
 
