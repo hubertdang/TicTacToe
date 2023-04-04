@@ -1,8 +1,8 @@
 /**
- * A TicTacToe game with a GUI.
+ * A TicTacToe game with a GUI, implemented with a model-view-controller design.
  *
  * @author Hubert Dang
- * @version March 30, 2023
+ * @version April 4, 2023
  */
 
 import javax.swing.*;

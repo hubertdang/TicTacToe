@@ -11,7 +11,7 @@ import java.util.Observable;
  *
  * @author Lynn Marshall
  * @author Hubert Dang
- * @version April 2, 2023
+ * @version April 4, 2023
  */
 
 public class TicTacToeModel extends Observable {
@@ -44,7 +44,7 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Sets everything up for a new game.  Marks all squares in the Tic Tac Toe board as empty,
-     * and indicates no winner yet, 9 free squares and the current player is player X.
+     * and indicates no winner yet, 9 free squares and the current player is the starting player.
      */
     private void clearBoard() {
         for (int i = 0; i < 3; i++) {
@@ -94,7 +94,8 @@ public class TicTacToeModel extends Observable {
 
 
     /**
-     * Fills a square in the 3x3 board with either an X or an O.
+     * Fills a square in the 3x3 board with either an X or an O. If the square is already
+     * marked, do nothing.
      *
      * @param row The row of the square.
      * @param col The column of the square.
@@ -126,6 +127,8 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Returns the board.
+     *
+     * Note: This method was created for the view to access the values of the board.
      *
      * @return The board.
      */
@@ -177,6 +180,10 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Returns the winner.
+     *
+     * Note: This method was created to be used by the controller to identify if the
+     * game was won by a particular player, or if it was tied.
+     *
      * @return A String of the winner.
      */
     public String getWinner() {
@@ -245,6 +252,7 @@ public class TicTacToeModel extends Observable {
 
     /**
      * Returns the mark at a specified square on the board.
+     *
      * @param row The row of the tile.
      * @param col The column of the tile.
      * @return The String mark at the specified square on the board.

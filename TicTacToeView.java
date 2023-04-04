@@ -8,7 +8,7 @@ import java.util.Observable;
  * built from the Swing and AWT frameworks.
  *
  * @author Hubert Dang
- * @version March 30, 2023
+ * @version April 4, 2023, 2023
  */
 
 public class TicTacToeView extends JPanel implements Observer {
@@ -23,6 +23,10 @@ public class TicTacToeView extends JPanel implements Observer {
     private static ImageIcon emptyIcon = new ImageIcon("emptyicon.jpg");
     private TicTacToeController controller;
 
+
+    /**
+     * Create a view for the TicTacToe game.
+     */
     public TicTacToeView() {
         this.setLayout(new BorderLayout());
 

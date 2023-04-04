@@ -12,7 +12,7 @@ import java.util.Observer;
  * built from the Swing and AWT frameworks.
  *
  * @author Hubert Dang
- * @version March 30, 2023
+ * @version April 4, 2023
  */
 
 public class TicTacToeController extends JFrame implements ActionListener, MouseListener {
@@ -24,6 +24,13 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
     private JMenuItem changeStartingPlayerItem;  // for changing the starting player
     AudioClip click;
 
+
+    /**
+     * Create new controller for the TicTacToe game.
+     *
+     * @param view The game's view.
+     * @param model The game's model.
+     */
     public TicTacToeController(TicTacToeView view, TicTacToeModel model) {
         super("TicTacToe");
 
