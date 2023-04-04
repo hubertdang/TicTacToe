@@ -21,6 +21,7 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
     private JMenuItem newItem;
     private JMenuItem quitItem;
     private JMenuItem resetItem;  // for resetting the players' scores
+    private JMenuItem changeStartingPlayerItem;  // for changing the starting player
     AudioClip click;
 
     public TicTacToeController(TicTacToeView view, TicTacToeModel model) {
@@ -71,6 +72,9 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
         resetItem = new JMenuItem("Reset score");
         fileMenu.add(resetItem);
 
+        changeStartingPlayerItem = new JMenuItem("Change starting player");
+        fileMenu.add(changeStartingPlayerItem);
+
         quitItem = new JMenuItem("Quit"); // create a menu item called "Quit"
         fileMenu.add(quitItem); // and add to the menu
 
@@ -78,6 +82,7 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
         newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, SHORTCUT_MASK));
         quitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, SHORTCUT_MASK));
         resetItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, SHORTCUT_MASK));
+        changeStartingPlayerItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, SHORTCUT_MASK));
     }
 
 
@@ -93,6 +98,7 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
         // listen for menu selections
         newItem.addActionListener(this);
         resetItem.addActionListener(this);
+        changeStartingPlayerItem.addActionListener(this);
         quitItem.addActionListener(new ActionListener() // create an anonymous inner class
                                    { // start of anonymous subclass of ActionListener
                                        // this allows us to put the code for this action here
@@ -161,6 +167,8 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
                 model.newGame();
             } else if (item == resetItem) {
                 model.resetScore();
+            } else if (item == changeStartingPlayerItem) {
+                model.changeStartingPlayer();
             }
         }
     }
@@ -202,7 +210,19 @@ public class TicTacToeController extends JFrame implements ActionListener, Mouse
 
 
     // empty implementations of methods in MouseListener interface
+
+    /**
+     * Not used.
+     */
     public void mouseClicked(MouseEvent e){}
+
+    /**
+     * Not used.
+     */
     public void mousePressed(MouseEvent e){}
+
+    /**
+     * Not used.
+     */
     public void mouseReleased(MouseEvent e){}
 }
